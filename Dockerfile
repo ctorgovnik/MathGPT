@@ -3,11 +3,15 @@ FROM nixos/nix AS dev
 
 WORKDIR /usr/src/mathgpt
 
-VOLUME /usr/src/mathgpt
-
 COPY default.nix /usr/src/mathgpt/default.nix
 
-CMD ["nix-shell"]
+RUN mkdir -p /root/.config/nvim 
+
+RUN git clone https://github.com/LazyVim/starter /root/.config/nvim
+
+RUN rm -rf /root/.config/nvim/.git
+
+ CMD ["nix-shell"]
 
 # Production Stage
 FROM nixos/nix AS prod
